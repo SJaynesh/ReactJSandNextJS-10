@@ -1,0 +1,10 @@
+.container {
+    padding: auto;
+    margin: 10px;
+}
+
+.title {
+    color: brown;
+    font-size: xx-large;
+    font-weight: 900;
+}

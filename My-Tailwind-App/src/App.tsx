@@ -1,0 +1,31 @@
+import './App.css';
+
+function App() {
+
+  const mainStyle = {
+    color: 'orange',
+    backgroundColor: 'black',
+    padding: '25px'
+  };
+
+  return <>
+    <h1 className="text-2xl">My React App </h1>
+    <h1 className="text-3xl">My React App </h1>
+    <h1 className="text-4xl">My React App </h1>
+    <h1 className="text-5xl">My React App </h1>
+    <h1 className="text-6xl">My React App </h1>
+    <h1 className="text-7xl">My React App </h1>
+
+    <h2 className="text-blue-400 text-9xl m-10">Hello World</h2>
+
+    <p style={{ color: 'gold', margin: '10px' }}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate aperiam illum earum quae quidem ex suscipit, tempore error laborum repellendus doloremque, nihil architecto hic! Enim voluptatum reiciendis reprehenderit incidunt aspernatur in consequatur voluptates, molestias nisi fugiat nam vero suscipit sed minus, asperiores facere explicabo deserunt id delectus saepe! Quasi nobis dignissimos omnis facilis architecto modi deleniti consequatur inventore, enim porro quo molestias pariatur incidunt dicta itaque sint ad saepe minima quas rem cum praesentium reprehenderit quae? Reiciendis enim id sapiente, assumenda harum, nesciunt iste soluta officia amet necessitatibus magnam ratione suscipit cupiditate! Tenetur officiis dolores atque commodi id nulla, suscipit, officia deserunt maxime provident doloribus accusamus tempore! Facere dolorem animi non magnam debitis tenetur officiis repudiandae quae doloribus iusto, maxime architecto adipisci impedit optio quod, tempora modi quo vitae dolores? Omnis, ducimus nostrum debitis dicta cumque qui expedita ea consequatur tempore reiciendis unde, nihil earum accusantium? Repellendus, minima. Excepturi impedit laborum in asperiores saepe! Earum maiores repellendus voluptatem ducimus, itaque distinctio fugiat deserunt explicabo sit veritatis aperiam ratione, voluptatum non vel autem numquam! Necessitatibus quae adipisci blanditiis ab libero nam nulla, minus at voluptate recusandae. Aliquid commodi laborum velit vero aut debitis ea assumenda necessitatibus, laboriosam quos officia inventore veniam et reiciendis iste asperiores nisi corrupti libero excepturi fugiat! Suscipit, deleniti magni quaerat ratione non magnam minus fuga voluptatibus. Blanditiis commodi magnam facere dignissimos. Qui optio officiis eius eligendi ad, numquam quia vel voluptates nihil! Vitae expedita voluptatibus accusantium voluptatem deleniti fuga, incidunt non? Aspernatur dicta quidem numquam odit nostrum ullam inventore animi magni deleniti eaque eligendi itaque quia officiis voluptas ipsam est tempora cum, repellat, ut aperiam, aliquam incidunt! Ducimus saepe facilis necessitatibus fugit delectus, aliquid quam autem amet optio, corrupti voluptate deleniti ad rerum dolorum quo laudantium illum hic, consectetur molestiae quidem facere enim eveniet ex distinctio? Minima quas laudantium harum vitae, aut ea dolores modi accusantium unde, veritatis cumque voluptatum animi eum? Excepturi incidunt ut, animi veritatis saepe cupiditate! Id numquam beatae ex, neque vero velit sed ipsum corporis voluptate illum optio, alias quod suscipit deleniti consequuntur temporibus, blanditiis quae architecto. Sequi nam fugit odit vel amet possimus aliquid accusamus, voluptatibus praesentium eius aperiam dicta ad consequuntur quaerat facilis. Nulla, hic libero beatae quisquam ipsum aspernatur natus dolorum recusandae possimus! Voluptatum autem ipsam dolores corporis accusantium modi quisquam aspernatur dicta sapiente est repellat eos assumenda eum, delectus veniam ipsum dolorem quas earum magni optio quibusdam? Natus quos ex voluptates. Voluptas, ducimus nesciunt eveniet omnis neque quibusdam, dolorem voluptates rem, voluptatum incidunt tempora. Nihil qui quo aliquam explicabo molestias non, rerum quibusdam accusantium? Corporis suscipit, voluptate sunt in nostrum voluptatem enim quisquam nisi recusandae, pariatur minima ut qui magni ipsam! Amet ab architecto quod nobis quas cupiditate illum natus! Quaerat dolores temporibus exercitationem quia tempore laborum, doloribus quae voluptas aspernatur harum et inventore aperiam! Deserunt, voluptates. Tenetur optio natus commodi nam asperiores minima quisquam voluptates quia, voluptatibus provident iure rem, quod inventore porro totam sint dolor doloremque praesentium atque voluptatum cumque alias? Ducimus architecto doloribus rem esse praesentium.</p>
+
+    <p style={mainStyle}>Lorem ipsum dolor sit amet consectetur adipisicing elit. A ratione temporibus culpa accusantium aut libero debitis maiores, assumenda est nihil laboriosam recusandae, aliquid corporis cumque magni accusamus at labore itaque quaerat officia. Molestiae fuga dicta ut rerum reprehenderit quibusdam autem quo optio veniam enim consectetur hic harum id vel voluptatem, sint laborum quam necessitatibus alias, laudantium architecto est iure. Autem nostrum, veritatis commodi consequuntur libero officiis iusto sunt, delectus nesciunt velit repellat voluptate provident eaque inventore quam iure illo dignissimos consequatur reiciendis ullam quod dolore voluptates harum. Corporis sit ullam, cum quam placeat voluptatum eveniet sunt. Aliquid, corporis dolorem placeat ut similique eos veniam adipisci ex enim nihil, id et. Doloribus facilis recusandae vero. Exercitationem ipsa voluptatum magni quibusdam impedit ab, corrupti maxime tempore mollitia nihil architecto ipsum aliquam dolores vitae omnis amet illum iure quaerat. Distinctio, itaque architecto! Quae, animi, sint deleniti, debitis saepe nemo iusto nostrum ullam autem aliquam quaerat excepturi maxime aut sit harum. Optio, in alias reiciendis perferendis provident, dolore eum aliquam dolorum amet consequatur culpa voluptatibus quae exercitationem beatae fugit maxime itaque voluptate aut, tempore expedita. Non harum delectus, aut ad eius alias, nam officiis nulla ipsa vero maxime facilis nisi iusto rem fugit voluptate.</p>
+
+    <div className="container">
+      <h1 className="title">Hello World</h1>
+    </div>
+  </>
+}
+
+export default App
