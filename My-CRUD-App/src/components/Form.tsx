@@ -11,6 +11,9 @@ export default function Form() {
     const [city, setCity] = useState<string>("");
     const [address, setAddress] = useState<string>("");
 
+    const [errorStudent, setErrorStudent] = useState({ f_name: "" });
+
+
     const allHobby = ["Reading", "Gaming", "Sports", "Music", "Other"];
     const allCity = ["Surat", "Rajkot", "Mumbai", "UP", "Bihar"];
 
@@ -18,9 +21,9 @@ export default function Form() {
         console.log(event.target.value);
 
         const data = event.target.value; // Music
-        const isChecked = event.target.checked;
+        const isChecked = event.target.checked; // true / false
 
-        console.log(isChecked);
+
         // const myAllHobby = [...hobby, data] // [Reading]
 
         // console.log("Array : ", myAllHobby);
@@ -33,12 +36,6 @@ export default function Form() {
             setHobby(abc => [...abc, data]);
         } else {
             setHobby(hobby => hobby.filter((myHobby) => myHobby !== data));
-
-            // [Reading, Gaming, Music]
-
-            // [Gaming]
-
-            // Music !== Music
         }
     }
 
@@ -46,26 +43,41 @@ export default function Form() {
 
         event.preventDefault(); // Event
 
+        let errorMessage = {
+            f_name: ""
+        };
 
         if (fName == "") {
-            alert("First Name is required...");
-            return;
+            errorMessage.f_name = "first name is required..";
         }
 
-        if (lName == "") {
-            alert("Last Name is required...");
-            return;
+        setErrorStudent(errorMessage);
+
+
+        const studentData = {
+            first_name: fName,
+            last_name: lName,
+            email,
+            phone,
+            gender,
+            hobby,
+            city,
+            address
         }
 
-        console.log("Form Submit");
-        console.log("First Name : ", fName);
-        console.log("Last Name : ", lName);
-        console.log("Email : ", email);
-        console.log("Phone : ", phone);
-        console.log("Gender : ", gender);
-        console.log("Hobby : ", hobby);
-        console.log("City : ", city);
-        console.log("Address : ", address);
+        console.log("Student : ", studentData);
+
+
+        localStorage.setItem('students', JSON.stringify(studentData));
+
+        setFName("");
+        setLName("");
+        setEmail("");
+        setPhone("");
+        setGender("");
+        setHobby([]);
+        setCity("");
+        setAddress("");
 
 
     }
@@ -76,7 +88,7 @@ export default function Form() {
                 {/* Header Section */}
                 <div className="text-center mb-10">
                     <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-2">
-                        My Students {fName}
+                        My Students
                     </h1>
                     <p className="text-gray-600 text-lg">Add new student information below</p>
                     <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto mt-4 rounded-full"></div>
@@ -102,10 +114,13 @@ export default function Form() {
                                 <input
                                     type="text"
                                     id="f_name"
+                                    value={fName}
                                     onChange={(event) => setFName(event.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white"
+                                    // onChange={(event) => setStudentData(state => {...state , f_name : event.target.value})}
+                                    className={`w-full px-4 py-3 rounded-lg border ${(errorStudent.f_name) ? 'border-red-800' : 'border-gray-300'}  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white`}
                                     placeholder="Enter first name"
                                 />
+                                <span className="text-red-400">{errorStudent.f_name}</span>
                             </div>
 
                             {/* Last Name */}
@@ -116,6 +131,7 @@ export default function Form() {
                                 <input
                                     type="text"
                                     id="l_name"
+                                    value={lName}
                                     onChange={(event) => setLName(event.target.value)}
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white"
                                     placeholder="Enter last name"
