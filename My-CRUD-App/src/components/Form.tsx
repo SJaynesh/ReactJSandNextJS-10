@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Form() {
 
@@ -11,7 +12,7 @@ export default function Form() {
     const [city, setCity] = useState<string>("");
     const [address, setAddress] = useState<string>("");
 
-    const [errorStudent, setErrorStudent] = useState({ f_name: "" });
+    const [error, setError] = useState<any>({});
 
 
     const allHobby = ["Reading", "Gaming", "Sports", "Music", "Other"];
@@ -39,19 +40,66 @@ export default function Form() {
         }
     }
 
+    const validation = () => {
+
+        let newError = {};
+
+        if (!fName) {
+            newError.fname = "first name is required..";
+        }
+
+        if (!lName) {
+            newError.lname = "last name is required..";
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email) {
+            newError.email = "email is required..";
+        } else if (!emailPattern.test(email)) {
+            newError.email = "Invalid email address...";
+        }
+
+        const phonePattern = /^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/;
+
+        if (!phone) {
+            newError.phone = "phone number is required..";
+        } else if (phone.length !== 10 || !phonePattern.test(phone)) {
+            newError.phone = "Invalid phone number..";
+        }
+
+        if (!gender) {
+            newError.gender = "gender is required..";
+        }
+
+        if (hobby.length === 0) {
+            newError.hobby = "hobby is required..";
+        }
+
+        if (!city) {
+            newError.city = "city is required..";
+        }
+
+        if (!address) {
+            newError.address = "address is required..";
+        }
+
+        setError(newError);
+
+        console.log("Error Length : ", Object.keys(newError).length);
+
+        return Object.keys(newError).length;
+
+    }
+
     const studemtFormSubmit = (event: any) => {
 
         event.preventDefault(); // Event
 
-        let errorMessage = {
-            f_name: ""
-        };
 
-        if (fName == "") {
-            errorMessage.f_name = "first name is required..";
+        if (validation() !== 0) { // 0 !== 0
+            return;
         }
 
-        setErrorStudent(errorMessage);
 
 
         const studentData = {
@@ -65,10 +113,9 @@ export default function Form() {
             address
         }
 
+        localStorage.setItem("student", JSON.stringify(studentData));
+
         console.log("Student : ", studentData);
-
-
-        localStorage.setItem('students', JSON.stringify(studentData));
 
         setFName("");
         setLName("");
@@ -79,6 +126,7 @@ export default function Form() {
         setCity("");
         setAddress("");
 
+        toast.success("Student added succussfully...")
 
     }
 
@@ -117,10 +165,10 @@ export default function Form() {
                                     value={fName}
                                     onChange={(event) => setFName(event.target.value)}
                                     // onChange={(event) => setStudentData(state => {...state , f_name : event.target.value})}
-                                    className={`w-full px-4 py-3 rounded-lg border ${(errorStudent.f_name) ? 'border-red-800' : 'border-gray-300'}  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white`}
+                                    className={`w-full px-4 py-3 rounded-lg border ${(error.fname) ? 'border-red-500' : 'border-gray-300'}  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white`}
                                     placeholder="Enter first name"
                                 />
-                                <span className="text-red-400">{errorStudent.f_name}</span>
+                                {error.fname && <span className="text-red-400">{error.fname}</span>}
                             </div>
 
                             {/* Last Name */}
@@ -133,9 +181,10 @@ export default function Form() {
                                     id="l_name"
                                     value={lName}
                                     onChange={(event) => setLName(event.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white"
+                                    className={`w-full px-4 py-3 rounded-lg border ${(error.lname) ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white`}
                                     placeholder="Enter last name"
                                 />
+                                {error.lname && <span className="text-red-400">{error.lname}</span>}
                             </div>
                         </div>
 
@@ -149,10 +198,12 @@ export default function Form() {
                                 <input
                                     type="email"
                                     id="email"
+                                    value={email}
                                     onChange={(event) => setEmail(event.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white"
+                                    className={`w-full px-4 py-3 rounded-lg border ${(error.email) ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white`}
                                     placeholder="student@example.com"
                                 />
+                                {error.email && <span className="text-red-400">{error.email}</span>}
                             </div>
 
                             {/* Phone */}
@@ -163,10 +214,12 @@ export default function Form() {
                                 <input
                                     type="tel"
                                     id="phone"
+                                    value={phone}
                                     onChange={(event) => setPhone(event.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white"
-                                    placeholder="+1 234 567 890"
+                                    className={`w-full px-4 py-3 rounded-lg border ${(error.phone) ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white`}
+                                    placeholder="8956214785"
                                 />
+                                {error.phone && <span className="text-red-400">{error.phone}</span>}
                             </div>
                         </div>
 
@@ -181,8 +234,9 @@ export default function Form() {
                                         type="radio"
                                         name="gender"
                                         value="Male"
+                                        checked={(gender === "Male") ? true : false}
                                         onChange={(event) => setGender(event.target.value)}
-                                        className="w-5 h-5 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                        className={`w-5 h-5 text-blue-600 focus:ring-blue-500 ${(error.gender) ? 'border-red-500' : 'border-gray-300'}`}
                                     />
                                     <span className="text-gray-700">Male</span>
                                 </label>
@@ -191,6 +245,7 @@ export default function Form() {
                                         type="radio"
                                         name="gender"
                                         value="Female"
+                                        checked={(gender === "Female") ? true : false}
                                         onChange={(event) => setGender(event.target.value)}
                                         className="w-5 h-5 text-blue-600 focus:ring-blue-500 border-gray-300"
                                     />
@@ -201,12 +256,14 @@ export default function Form() {
                                         type="radio"
                                         name="gender"
                                         value="Other"
+                                        checked={(gender === "Other") ? true : false}
                                         onChange={(event) => setGender(event.target.value)}
                                         className="w-5 h-5 text-blue-600 focus:ring-blue-500 border-gray-300"
                                     />
                                     <span className="text-gray-700">Other</span>
                                 </label>
                             </div>
+                            {error.gender && <span className="text-red-400">{error.gender}</span>}
                         </div>
 
                         {/* Hobby Checkboxes */}
@@ -221,6 +278,7 @@ export default function Form() {
                                         <input
                                             type="checkbox"
                                             value={myHobby}
+                                            checked={hobby.includes(myHobby)}
                                             onChange={getStudentHobby}
                                             className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300"
                                         />
@@ -229,6 +287,7 @@ export default function Form() {
                                 })}
 
                             </div>
+                            {error.hobby && <span className="text-red-400">{error.hobby}</span>}
                         </div>
 
                         {/* City Select */}
@@ -238,6 +297,7 @@ export default function Form() {
                             </label>
                             <select
                                 id="city"
+                                value={city}
                                 onChange={(event) => setCity(event.target.value)}
                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white cursor-pointer"
                             >
@@ -247,6 +307,7 @@ export default function Form() {
                                 })}
 
                             </select>
+                            {error.city && <span className="text-red-400">{error.city}</span>}
                         </div>
 
                         {/* Address Textarea */}
@@ -257,10 +318,12 @@ export default function Form() {
                             <textarea
                                 id="address"
                                 rows={4}
+                                value={address}
                                 onChange={(event) => setAddress(event.target.value)}
                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 outline-none bg-gray-50 hover:bg-white resize-none"
                                 placeholder="Enter full address"
                             ></textarea>
+                            {error.address && <span className="text-red-400">{error.address}</span>}
                         </div>
 
                         {/* Submit Button */}
@@ -280,6 +343,8 @@ export default function Form() {
                     </form>
                 </div>
             </div>
+
+            <ToastContainer />
         </div>
     );
 }
