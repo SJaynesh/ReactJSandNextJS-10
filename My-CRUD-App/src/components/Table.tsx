@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
-export default function Table() {
-
-    const [allStudents, setAllStudents] = useState<studentType[]>(JSON.parse(localStorage.getItem('students') || "[]"));
-
-    type studentType = {
-        fName: string,
-        lName: string,
-        email: string,
-        phone: string,
-        gender: string,
-        hobby: string[],
-        city: string,
-        address: string
-    };
+export default function Table({ allStudents }) {
 
     useEffect(() => {
         console.log("Table All Students : ", allStudents);
-    }, [])
+    }, []);
 
     return (
         <>
@@ -184,7 +172,9 @@ export default function Table() {
                                                 </svg>
                                             </button>
                                             {/* Delete  */}
-                                            <button className="text-red-600 hover:text-red-900 transition">
+                                            <button onClick={() => {
+                                                toast.error("Student deleted successfully...");
+                                            }} className="text-red-600 hover:text-red-900 transition">
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                                 </svg>

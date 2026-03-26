@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
-export default function Form() {
+export default function Form({ allStudents, setAllStudents }) {
 
     const [fName, setFName] = useState<string>("");
     const [lName, setLName] = useState<string>("");
@@ -13,8 +13,6 @@ export default function Form() {
     const [address, setAddress] = useState<string>("");
 
     const [error, setError] = useState<any>({});
-
-    const [allStudents, setAllStudents] = useState<studentType[]>(JSON.parse(localStorage.getItem('students') || "[]")); // Array of object
 
     type studentType = {
         fName: string,
