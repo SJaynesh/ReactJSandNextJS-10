@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import type { studentType } from "../utils/global";
 
-export default function Form({ allStudents, setAllStudents }) {
+type propsType = {
+    allStudents: studentType[],
+    setAllStudents: (value: React.SetStateAction<studentType[]>) => void
+}
+
+
+export default function Form({ allStudents, setAllStudents }: propsType) {
 
     const [fName, setFName] = useState<string>("");
     const [lName, setLName] = useState<string>("");
@@ -14,16 +21,6 @@ export default function Form({ allStudents, setAllStudents }) {
 
     const [error, setError] = useState<any>({});
 
-    type studentType = {
-        fName: string,
-        lName: string,
-        email: string,
-        phone: string,
-        gender: string,
-        hobby: string[],
-        city: string,
-        address: string
-    };
 
 
     const allHobby = ["Reading", "Gaming", "Sports", "Music", "Other"];
