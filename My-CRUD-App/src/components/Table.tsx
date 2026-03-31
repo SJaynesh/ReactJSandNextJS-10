@@ -14,6 +14,8 @@ export default function Table({
 }: propsType) {
   const [numberOfCity, setNumberOfCity] = useState<number>(0);
 
+  const [search, setSearch] = useState<string>("");
+
   useEffect(() => {
     console.log("Table All Students : ", allStudents);
 
@@ -29,6 +31,15 @@ export default function Table({
 
     setNumberOfCity(allCity.size);
   }, [allStudents]);
+
+  const filterStudents = allStudents.filter((student) => {
+    return (
+      student.fName.toLowerCase().includes(search.toLowerCase()) ||
+      student.lName.toLowerCase().includes(search.toLowerCase()) ||
+      student.email.toLowerCase().includes(search.toLowerCase()) ||
+      student.city.toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   return (
     <>
@@ -180,6 +191,10 @@ export default function Table({
             <input
               type="text"
               placeholder="Search students by name, email, or city..."
+              value={search}
+              onChange={(event) => {
+                setSearch(event.target.value);
+              }}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
             />
           </div>
@@ -229,7 +244,7 @@ export default function Table({
             </thead>
 
             <tbody className="bg-white divide-y divide-gray-200">
-              {allStudents.map((student, index) => {
+              {filterStudents.map((student, index) => {
                 return (
                   <tr
                     key={index}
@@ -331,10 +346,10 @@ export default function Table({
                 );
               })}
 
-              {allStudents.length === 0 && (
-                <div>
-                  <p className="text-center">Students not found</p>
-                </div>
+              {filterStudents.length === 0 && (
+                <tr>
+                  <td colSpan={10}>Student not found...</td>
+                </tr>
               )}
             </tbody>
           </table>
