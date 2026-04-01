@@ -8,13 +8,13 @@ export default function NavBar() {
 
   return (
     <>
-      <header className="bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg sticky top-0 z-50">
+      <header className="bg-linear-to-r from-slate-900 to-slate-800 shadow-lg sticky top-0 z-50">
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo/Brand */}
             <div className="flex items-center">
               <Link href="/" className="group">
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent group-hover:from-blue-500 group-hover:to-purple-600 transition-all duration-300">
+                <h2 className="text-2xl font-bold bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent group-hover:from-blue-500 group-hover:to-purple-600 transition-all duration-300">
                   Cars
                 </h2>
               </Link>
@@ -22,10 +22,37 @@ export default function NavBar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
-              <NavLink href="/">Home</NavLink>
-              <NavLink href="/about">About</NavLink>
-              <NavLink href="/contact">Contact</NavLink>
-              <NavLink href="/about/flutter">Flutter</NavLink>
+              <Link
+                href="/"
+                className="px-4 py-2 text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-200 hover:bg-white/10 relative group"
+              >
+                Home
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+
+              <Link
+                href="/about"
+                className="px-4 py-2 text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-200 hover:bg-white/10 relative group"
+              >
+                About
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+
+              <Link
+                href="/contact"
+                className="px-4 py-2 text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-200 hover:bg-white/10 relative group"
+              >
+                Contact
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+
+              <Link
+                href="/about/flutter"
+                className="px-4 py-2 text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-200 hover:bg-white/10 relative group"
+              >
+                Flutter
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-linear-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -58,30 +85,38 @@ export default function NavBar() {
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-slate-700">
               <div className="flex flex-col space-y-2">
-                <MobileNavLink
+
+                <Link
                   href="/"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
                 >
                   Home
-                </MobileNavLink>
-                <MobileNavLink
+                </Link>
+
+                <Link
                   href="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
                 >
                   About
-                </MobileNavLink>
-                <MobileNavLink
+                </Link>
+
+                <Link
                   href="/contact"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
                 >
                   Contact
-                </MobileNavLink>
-                <MobileNavLink
+                </Link>
+
+                <Link
                   href="/about/flutter"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
                 >
                   Flutter
-                </MobileNavLink>
+                </Link>
               </div>
             </div>
           )}
@@ -91,28 +126,4 @@ export default function NavBar() {
   );
 }
 
-// Desktop Navigation Link Component
-function NavLink({ href, children }: any) {
-  return (
-    <Link
-      href={href}
-      className="px-4 py-2 text-gray-300 hover:text-white font-medium rounded-lg transition-all duration-200 hover:bg-white/10 relative group"
-    >
-      {children}
-      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
-    </Link>
-  );
-}
 
-// Mobile Navigation Link Component
-function MobileNavLink({ href, onClick, children }: any) {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
-    >
-      {children}
-    </Link>
-  );
-}
