@@ -55,7 +55,7 @@ export default function Slider() {
         return () => clearInterval(timer);
     }, []);
 
-    return (
+    return <>
         <div className="relative h-screen w-full overflow-hidden bg-linear-to-br from-gray-900 to-gray-800">
             {/* Slides */}
             {slides.map((slide, index) => <div
@@ -107,5 +107,5 @@ export default function Slider() {
                 <ChevronRight className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
             </button>
         </div>
-    );
+    </>
 }
