@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formCarDataType } from "../utils/type";
+import { carBrand, carColor, carFuel, formCarDataType } from "../utils/type";
 import { toast } from "react-toastify";
 
 export default function AddCar() {
-  const carBrand = ["TATA", "Maruti Suzuki", "Mahindra", "Kia", "MG Motor", "Toyota"];
-  const carColor = ["Black", "White", "Yellow", "Red", "Green", "Custom"];
-  const carFuel = ["Petrol", "Diesel", "EV", "CNG", "Hybrid"];
 
 
 

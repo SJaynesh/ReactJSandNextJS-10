@@ -116,7 +116,7 @@ export default function ViewCars() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-linear-to-r from-blue-600 to-blue-700">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-white uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-white uppercase tracking-wider">No.</th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-white uppercase tracking-wider">Car Name</th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-white uppercase tracking-wider">Car Model</th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-white uppercase tracking-wider">Car Price</th>
@@ -128,10 +128,10 @@ export default function ViewCars() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {allCars.length > 0 ? (
-                  allCars.map((car) => {
+                  allCars.map((car, index) => {
                     return (
                       <tr key={car.id} className="hover:bg-gray-50 transition-colors duration-200">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{car.id}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                           <div className="flex items-center gap-2">
                             <Car className="w-4 h-4 text-gray-400" />
@@ -177,7 +177,7 @@ export default function ViewCars() {
                           <div className="flex gap-2">
                             <button
                               onClick={() => {
-                                router.push(`/editCar/${car.id}?name=${car.carName}`);
+                                router.push(`/editCar/${car.id}`);
                               }}
                               className="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-lg transition-colors duration-200 flex items-center gap-1"
                             >
