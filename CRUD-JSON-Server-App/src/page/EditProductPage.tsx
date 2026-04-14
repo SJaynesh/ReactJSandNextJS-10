@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { addProduct } from "../Services/ProductService";
 
-export default function AddProductPage() {
+export default function EditProductPage() {
 
     const navigate = useNavigate();
 
