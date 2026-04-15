@@ -17,7 +17,7 @@ export default function AddProductPage() {
         p_description: "",
     });
 
-    const productCategory = ["Electronic", "Home & Living", "Sports", "Fashion"];
+    const productCategory = ["Electronic", "Home & Living", "Sports", "Fashion", "Books"];
 
     // Shared Tailwind classes for consistent styling
     const labelClasses = "block text-sm font-semibold text-slate-700 mb-1.5";

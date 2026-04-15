@@ -5,15 +5,30 @@ import { Link } from "react-router";
 
 export default function HomePage() {
     const [allProducts, setAllProducts] = useState<productFetchType[]>([]);
+    const [allCategories, setAllCategory] = useState<string[]>([]);
+    const [filterCategory, setFilterCategory] = useState<string>("All");
 
     useEffect(() => {
         getAllProductData();
     }, []);
 
+    useEffect(() => {
+        let allCategory: any = new Set(allProducts.map((product) => product.p_category));
+
+        allCategory = Array.from(allCategory);
+
+        setAllCategory(["All", ...allCategory])
+
+    }, [allProducts]);
+
     const getAllProductData = async () => {
         const allProductData = await fetchAllProducts();
         setAllProducts(allProductData);
     };
+
+    const allFilterProducts = (filterCategory === "All")
+        ? allProducts
+        : allProducts.filter((product) => product.p_category === filterCategory);
 
     return (
         <div className="bg-gray-50 min-h-screen pb-12">
@@ -21,7 +36,7 @@ export default function HomePage() {
             <div className="bg-white border-b border-gray-200 mb-10">
                 <div className="max-w-7xl mx-auto py-12 px-4 text-center">
                     <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-                        Featured <span className="text-indigo-600">Products</span>
+                        Featured <span className="text-indigo-600">Products {filterCategory}</span>
                     </h1>
                     <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
                         Explore our latest collection of high-quality items curated just for you.
@@ -29,10 +44,20 @@ export default function HomePage() {
                 </div>
             </div>
 
+            <div>
+                {allCategories.map((category, index) => {
+                    return (
+                        <button key={index} onClick={() => setFilterCategory(category)} className={`${(category === filterCategory) ? "bg-black hover:bg-gray-700" : "bg-indigo-600 hover:bg-indigo-700"} text-white p-2.5 m-4 rounded-xl shadow-md shadow-indigo-100 transition-all active:scale-90`}>
+                            {category}
+                        </button>
+                    )
+                })}
+            </div>
+
             {/* Product Grid */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {allProducts.map((product, index) => (
+                    {allFilterProducts.map((product, index) => (
                         <Link key={product.id || index} to={`product-detail/${product.id}`}>
                             <div
 
@@ -83,7 +108,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Empty State */}
-                {allProducts.length === 0 && (
+                {allFilterProducts.length === 0 && (
                     <div className="text-center py-20">
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 text-gray-400 mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
