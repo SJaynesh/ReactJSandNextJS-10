@@ -5,8 +5,29 @@ import { useNavigate } from "react-router";
 
 export default function ViewProductPage() {
     const [allProducts, setAllProduct] = useState<productFetchType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
 
     const navigate = useNavigate();
+
+    const totalItems = allProducts.length; // totalItems = 51
+    const totalPages = Math.ceil(totalItems / itemPerPage); // totalPages = 51 / 10 = 5.1 = 6
+
+    const startIndex = (currentPage - 1) * itemPerPage;
+    const endIndex = startIndex + itemPerPage;
+
+
+    console.log("Total Item : ", totalItems);
+    console.log("Total Pages : ", totalPages);
+    console.log("Start Index : ", startIndex); // 0
+    console.log("End Index : ", endIndex); // 10
+
+    const currentProducts = allProducts.slice(startIndex, endIndex);
+
+    console.log("Current Products : ", currentProducts);
+    console.log("Total : ", [...Array(totalPages)]); // []
+
+
 
     useEffect(() => {
         getAllProducts();
@@ -27,7 +48,7 @@ export default function ViewProductPage() {
                 </div>
                 <div className="bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm">
                     <span className="text-slate-500 text-sm">Total Products: </span>
-                    <span className="font-bold text-indigo-600">{allProducts.length}</span>
+                    <span className="font-bold text-indigo-600">{currentProducts.length}</span>
                 </div>
             </div>
 
@@ -47,11 +68,11 @@ export default function ViewProductPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
-                            {allProducts.length > 0 ? (
-                                allProducts.map((product, index) => (
+                            {currentProducts.length > 0 ? (
+                                currentProducts.map((product, index) => (
                                     <tr key={product.id || index} className="hover:bg-slate-50/80 transition-colors group">
                                         <td className="px-6 py-4 text-sm font-medium text-slate-400">
-                                            {index + 1}
+                                            {startIndex + index + 1}
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-4">
@@ -107,6 +128,25 @@ export default function ViewProductPage() {
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div>
+                <button onClick={() => { }} className={`ml-1 px-3 py-1 border rounded `}>{"<"}</button>
+                {[...Array(totalPages)].map((_, index) => (
+                    <button onClick={() => setCurrentPage(index + 1)} className={`ml-1 px-3 py-1 border rounded ${(currentPage === index + 1) ? 'bg-indigo-500 text-white' : 'border-gray-500'}`}>{index + 1}</button>
+                ))}
+                <button onClick={() => { }} className={`ml-1 px-3 py-1 border rounded `}>{">"}</button>
+
+
+                <select name="" id="" onChange={(event) => {
+                    setItemPerPage(Number(event.target.value));
+                    setCurrentPage(1);
+                }}  >
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                </select>
             </div>
         </div>
     );
