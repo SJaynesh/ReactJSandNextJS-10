@@ -13,7 +13,7 @@ module.exports.authMiddleware = async (req, res, next) => {
     let token = req.headers.authorization;
 
     if (!token) {
-        return res.status(status.BAD_REQUEST).json(errorResponse(status.BAD_REQUEST, true, MSG.TOKEN_MISSING));
+        return res.json(errorResponse(status.BAD_REQUEST, true, MSG.TOKEN_MISSING));
     }
 
     token = token.slice(7, token.length);
@@ -39,18 +39,18 @@ module.exports.authMiddleware = async (req, res, next) => {
         if (data) {
             next();
         } else {
-            return res.status(status.BAD_REQUEST).json(errorResponse(status.BAD_REQUEST, true, MSG.TOKEN_INVALID));
+            return res.json(errorResponse(status.BAD_REQUEST, true, MSG.TOKEN_INVALID));
         }
     } catch (err) {
         console.log(err);
-        return res.status(status.BAD_REQUEST).json(errorResponse(status.BAD_REQUEST, true, MSG.TOKEN_INVALID));
+        return res.json(errorResponse(status.BAD_REQUEST, true, MSG.TOKEN_INVALID));
     }
 
 }
 
 module.exports.checkIsAdmin = (req, res, next) => {
     if (req.user) {
-        return res.status(status.BAD_REQUEST).json(errorResponse(status.BAD_REQUEST, true, MSG.UNAUTHORIZED_ACCESS));
+        return res.json(errorResponse(status.BAD_REQUEST, true, MSG.UNAUTHORIZED_ACCESS));
     }
 
     next();

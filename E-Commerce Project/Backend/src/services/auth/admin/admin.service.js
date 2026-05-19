@@ -23,7 +23,7 @@ module.exports = class AdminAuthService {
 
     async fetchAllAdmin() {
         try {
-            return await Admin.find({ isDelete: false }).select('_id first_name last_name email phone isActive create_at update_at');
+            return await Admin.find({ isDelete: false }).select('_id first_name last_name email phone profile_image isActive create_at update_at');
         } catch (err) {
             console.log("Fetch All Admin Error: ", err);
         }

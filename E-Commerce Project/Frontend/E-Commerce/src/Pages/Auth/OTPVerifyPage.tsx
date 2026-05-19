@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { toast } from "react-toastify";
+import { forgotPasswordAdmin, OTPVerifyAdmin } from "../../services/auth/AuthService";
 
 export default function OTPVerifyPage() {
     const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
@@ -46,17 +47,35 @@ export default function OTPVerifyPage() {
         }
 
         setLoader(true);
-        try {
-            console.log("Verifying OTP:", finalOtp);
-            // Replace with your API call: const response = await verifyOtpAdmin({ otp: finalOtp });
-            toast.success("OTP Verified Successfully!");
-            navigate("/reset-password");
-        } catch (error) {
-            toast.error("Invalid OTP. Please try again.");
-        } finally {
-            setLoader(false);
+
+        const data = await OTPVerifyAdmin(finalOtp);
+
+        if (data.status === 200) {
+            toast.success(data.message);
+            // Navigate New Password
+            navigate('/new-password');
         }
+        else {
+
+            toast.error(data.message);
+        }
+
+        setLoader(false);
+
     };
+
+    const resendOTP = async () => {
+
+        const email = sessionStorage.getItem('email') || "";
+
+        const data = await forgotPasswordAdmin(email);
+
+        if (data.status === 200) {
+            toast.success(data.message);
+        } else {
+            toast.error(data.message);
+        }
+    }
 
     return (
         <div className="min-h-screen bg-amber-50/30 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -114,7 +133,7 @@ export default function OTPVerifyPage() {
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-600">
                             Didn't receive the code?{" "}
-                            <button className="font-semibold text-yellow-700 hover:text-yellow-600">
+                            <button onClick={resendOTP} className="font-semibold text-yellow-700 hover:text-yellow-600">
                                 Resend
                             </button>
                         </p>

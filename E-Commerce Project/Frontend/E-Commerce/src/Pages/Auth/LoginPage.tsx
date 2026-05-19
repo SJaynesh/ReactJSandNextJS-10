@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginAdmin } from "../../services/auth/AuthService";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router";
@@ -8,7 +8,24 @@ import { Loader2 } from "lucide-react";
 export default function LoginPage() {
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [loader, setLoader] = useState<boolean>(false);
+    const [myTimer, setMyTimer] = useState<number>(120); // 2:00
     const navigate = useNavigate();
+
+    //01:59
+
+    useEffect(() => {
+
+        // 0 <= 0
+        if (myTimer <= 0) {
+            return;
+        }
+
+        const timer = setInterval(() => {
+            setMyTimer(state => state - 1); // 119
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [myTimer]);
 
     const onFormSubmit = async (event: any) => {
         event.preventDefault();
@@ -34,12 +51,15 @@ export default function LoginPage() {
 
     }
 
+    const minute = Math.floor(myTimer / 60).toString().padStart(2, '0');
+    const second = (myTimer % 60).toString().padStart(2, '0');
+
     return (
         <div className="min-h-screen bg-amber-50/30 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
 
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
-                    Store Admin
+                    Store Admin {(second !== "00" && minute !== "00") ? `${minute} : ${second}` : "Resend"}
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
                     Manage your orders and inventory

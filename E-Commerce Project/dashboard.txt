@@ -1,0 +1,32 @@
+Dashboard
+	CountDown
+	TotalAdmin, TotalUsers, Total Products, TotalCategory, TotalSubCategory, TotalExtraCategory, 
+	TotalOrders, Earning, PendingOrders
+
+Admin (API)
+	=> Add Admin
+	=> View Admin
+
+Users  (API)
+	=> View Users
+	=> Add Users
+
+Category  (API)
+	=> Add Category
+	=> View Category
+
+Sub Category
+	=> Add SubCategory
+	=> View SubCategory
+
+Extra Category
+	=> Add ExtraCategory
+	=> View ExtraCategory
+
+Products 
+	=> Add Products
+	=> View Products
+
+Orders
+	=> All Orders (pending, payment)
+
