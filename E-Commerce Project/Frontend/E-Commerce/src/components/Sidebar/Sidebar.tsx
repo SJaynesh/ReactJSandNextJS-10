@@ -1,217 +1,118 @@
 // components/Sidebar/Sidebar.tsx
+"use client";
+
+import { useState } from "react";
 import {
     LayoutDashboard,
     Users,
     UserPlus,
-    ShoppingBag,
-    Package,
-    Grid,
     Layers,
-    PlusCircle,
-    Eye,
-    ShoppingCart,
     LogOut,
-    Menu,
-    X,
     ChevronDown,
-    ChevronRight
 } from "lucide-react";
-import { useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 
-interface SidebarProps {
-    activeView: string;
-    setActiveView: (view: any) => void;
-}
+export default function Sidebar() {
 
-interface MenuItem {
-    title: string;
-    icon: React.ReactNode;
-    view?: string;
-    submenu?: {
-        title: string;
-        view: string;
-        icon: React.ReactNode;
-    }[];
-}
+    const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-export default function Sidebar({ activeView, setActiveView }: SidebarProps) {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [openMenus, setOpenMenus] = useState<string[]>(['admin', 'users', 'category', 'subcategory', 'extracategory', 'products']);
-
-    const menuItems: MenuItem[] = [
-        {
-            title: "Dashboard",
-            icon: <LayoutDashboard size={20} />,
-            view: "dashboard"
-        },
-        {
-            title: "Admin",
-            icon: <Users size={20} />,
-            submenu: [
-                { title: "Add Admin", view: "add-admin", icon: <UserPlus size={18} /> },
-                { title: "View Admin", view: "view-admin", icon: <Eye size={18} /> }
-            ]
-        },
-        {
-            title: "Users",
-            icon: <Users size={20} />,
-            submenu: [
-                { title: "Add User", view: "add-user", icon: <UserPlus size={18} /> },
-                { title: "View Users", view: "view-users", icon: <Eye size={18} /> }
-            ]
-        },
-        {
-            title: "Category",
-            icon: <Grid size={20} />,
-            submenu: [
-                { title: "Add Category", view: "add-category", icon: <PlusCircle size={18} /> },
-                { title: "View Category", view: "view-category", icon: <Eye size={18} /> }
-            ]
-        },
-        {
-            title: "Sub Category",
-            icon: <Layers size={20} />,
-            submenu: [
-                { title: "Add SubCategory", view: "add-subcategory", icon: <PlusCircle size={18} /> },
-                { title: "View SubCategory", view: "view-subcategory", icon: <Eye size={18} /> }
-            ]
-        },
-        {
-            title: "Extra Category",
-            icon: <Package size={20} />,
-            submenu: [
-                { title: "Add ExtraCategory", view: "add-extracategory", icon: <PlusCircle size={18} /> },
-                { title: "View ExtraCategory", view: "view-extracategory", icon: <Eye size={18} /> }
-            ]
-        },
-        {
-            title: "Products",
-            icon: <ShoppingBag size={20} />,
-            submenu: [
-                { title: "Add Products", view: "add-product", icon: <PlusCircle size={18} /> },
-                { title: "View Products", view: "view-products", icon: <Eye size={18} /> }
-            ]
-        },
-        {
-            title: "Orders",
-            icon: <ShoppingCart size={20} />,
-            view: "all-orders"
-        }
-    ];
-
-    const toggleMenu = (title: string) => {
-        setOpenMenus(prev =>
-            prev.includes(title)
-                ? prev.filter(t => t !== title)
-                : [...prev, title]
-        );
-    };
+    const navigate = useNavigate();
+    const currentPath = "/dashboard";
 
     const handleLogout = () => {
-        localStorage.removeItem('authAdminToken');
-        window.location.href = '/login';
+        localStorage.removeItem("authAdminToken");
+        window.location.href = "/login";
+    };
+
+
+    const getLinkClass = (isActive: boolean) => {
+        return `w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isActive
+            ? "bg-blue-600 text-white shadow-xs"
+            : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+            }`;
     };
 
     return (
-        <>
-            {/* Mobile Menu Button */}
-            <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg"
-            >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+        <aside className="fixed lg:static inset-y-0 left-0 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-slate-950 border-r border-slate-800 text-slate-200 flex flex-col h-screen">
 
-            {/* Sidebar */}
-            <div className={`
-        fixed lg:static inset-y-0 left-0 z-40
-        transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0 transition-transform duration-300 ease-in-out
-        w-64 bg-linear-to-b from-gray-900 to-gray-800 text-white flex flex-col
-      `}>
-                <div className="p-4 border-b border-gray-700">
-                    <h1 className="text-2xl font-bold text-center">Admin Panel</h1>
-                    <p className="text-xs text-center text-gray-400 mt-1">Management System</p>
+            {/* Branding / Header */}
+            <div className="p-5 border-b border-slate-800 flex flex-col items-start justify-center gap-1">
+                <div className="flex items-center gap-2">
+                    <div className="h-7 w-7 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white text-sm tracking-wider">
+                        W
+                    </div>
+                    <h1 className="text-xl font-bold tracking-tight text-white">WhiteCart</h1>
                 </div>
-
-                <nav className="flex-1 overflow-y-auto py-4">
-                    {menuItems.map((item, index) => (
-                        <div key={index} className="px-2 mb-2">
-                            {item.submenu ? (
-                                <div>
-                                    <button
-                                        onClick={() => toggleMenu(item.title.toLowerCase().replace(' ', ''))}
-                                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700 transition duration-200"
-                                    >
-                                        <div className="flex items-center space-x-3">
-                                            {item.icon}
-                                            <span>{item.title}</span>
-                                        </div>
-                                        {openMenus.includes(item.title.toLowerCase().replace(' ', '')) ?
-                                            <ChevronDown size={16} /> : <ChevronRight size={16} />
-                                        }
-                                    </button>
-
-                                    {openMenus.includes(item.title.toLowerCase().replace(' ', '')) && (
-                                        <div className="ml-6 mt-1 space-y-1">
-                                            {item.submenu.map((sub, subIndex) => (
-                                                <button
-                                                    key={subIndex}
-                                                    onClick={() => {
-                                                        setActiveView(sub.view);
-                                                        setIsMobileMenuOpen(false);
-                                                    }}
-                                                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm transition duration-200
-                            ${activeView === sub.view
-                                                            ? 'bg-blue-600 text-white'
-                                                            : 'text-gray-400 hover:bg-gray-700 hover:text-white'
-                                                        }`}
-                                                >
-                                                    {sub.icon}
-                                                    <span>{sub.title}</span>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            ) : (
-                                <button
-                                    onClick={() => {
-                                        setActiveView(item.view);
-                                        setIsMobileMenuOpen(false);
-                                    }}
-                                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition duration-200
-                    ${activeView === item.view
-                                            ? 'bg-blue-600 text-white'
-                                            : 'text-gray-300 hover:bg-gray-700'
-                                        }`}
-                                >
-                                    {item.icon}
-                                    <span>{item.title}</span>
-                                </button>
-                            )}
-                        </div>
-                    ))}
-                </nav>
-
-                <div className="p-4 border-t border-gray-700">
-                    <button
-                        onClick={handleLogout}
-                        className="flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-300 hover:bg-red-600 hover:text-white transition duration-200 w-full"
-                    >
-                        <LogOut size={20} />
-                        <span>Logout</span>
-                    </button>
-                </div>
+                <p className="text-xs font-medium text-slate-500">E-Commerce Management System</p>
             </div>
 
-            {/* Overlay for mobile */}
-            {isMobileMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                />
-            )}
-        </>
+            {/* Navigation Body */}
+            <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1.5 custom-scrollbar">
+
+                {/* Dashboard Main Link */}
+
+                <NavLink to={'/dashboard'} className={({ isActive }) => `w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'}`}>
+                    <LayoutDashboard size={18} className={currentPath === "/dashboard" ? "text-white" : "text-slate-400"} />
+                    <span>Dashboard</span>
+                </NavLink>
+
+                {/* Section Title */}
+                <div className="pt-4 px-3.5 mb-2 text-xxs font-semibold text-slate-500 uppercase tracking-wider">
+                    Management
+                </div>
+
+                {/* Admin Multi-level Menu */}
+                <div className="space-y-1">
+                    <button
+                        onClick={() => setIsAdminOpen(!isAdminOpen)}
+                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isAdminOpen
+                            ? "text-slate-200 bg-slate-900"
+                            : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                            }`}
+                    >
+                        <div className="flex items-center space-x-3">
+                            <Users size={18} className={isAdminOpen ? "text-blue-500" : "text-slate-400"} />
+                            <span>Admin</span>
+                        </div>
+                        <ChevronDown
+                            size={16}
+                            className={`transform transition-transform duration-200 text-slate-500 ${isAdminOpen ? "rotate-180 text-slate-300" : ""}`}
+                        />
+                    </button>
+
+                    {/* Animated Dropdown Container */}
+                    <div className={`pl-7 pr-1 space-y-1 overflow-hidden transition-all duration-300 ease-in-out ${isAdminOpen ? "max-h-32 opacity-100 mt-1" : "max-h-0 opacity-0 pointer-events-none"
+                        }`}>
+                        <NavLink to={'/dashboard/add-admin'}
+                            className={({ isActive }) => `w-full flex items-center space-x-3 px-3 py-2 rounded-md text-xs font-medium transition-all duration-150 ${isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'}`}
+                        >
+                            <UserPlus size={14} />
+                            <span>Add New Admin</span>
+                        </NavLink>
+
+                        <NavLink to={'/dashboard/view-admin'}
+                            className={({ isActive }) => `w-full flex items-center space-x-3 px-3 py-2 rounded-md text-xs font-medium transition-all duration-150 ${isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'}`}
+                        >
+                            <Layers size={14} />
+                            <span>View Admin</span>
+                        </NavLink>
+
+
+                    </div>
+                </div>
+
+            </nav>
+
+            {/* Footer Actions */}
+            <div className="p-4 border-t border-slate-800 bg-slate-950/50">
+                <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:bg-red-950/40 hover:text-red-400 border border-transparent hover:border-red-900/50 transition-all duration-200 w-full group"
+                >
+                    <LogOut size={18} className="text-slate-500 group-hover:text-red-400 transition-colors" />
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </aside>
     );
 }
